@@ -1,0 +1,11 @@
+# Download and prepare Toda with minimal Alpine base
+FROM alpine:latest as toda-downloader
+RUN apk add --no-cache curl tar
+ARG TODA_VERSION=v0.2.4
+RUN curl -L "https://github.com/chaos-mesh/toda/releases/download/${TODA_VERSION}/toda-linux-amd64.tar.gz" -o toda.tar.gz \
+    && tar -xz -C /tmp < toda.tar.gz \
+    && chmod +x /tmp/toda
+
+# Minimal base - just the binary, let client images handle dependencies
+FROM scratch
+COPY --from=toda-downloader /tmp/toda /usr/local/bin/toda
