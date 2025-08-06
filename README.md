@@ -67,3 +67,7 @@ docker run --rm chaotic-geth toda --help
 ## About Toda
 
 [Toda](https://github.com/chaos-mesh/toda) is a filesystem hook utility that enables IO chaos injection. It must be executed within the target process's PID and mount namespace for proper functionality.
+
+## Status
+
+![Test Status](https://github.com/zktaiga/chaotic-ethereum/workflows/Test%20All%20Clients/badge.svg)
