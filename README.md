@@ -11,7 +11,7 @@ Images mirror upstream versions and are available at `ghcr.io/zktaiga/chaotic-et
 - **Erigon**: `ghcr.io/zktaiga/chaotic-ethereum/erigon:v3.0.15` (based on `erigontech/erigon:v3.0.15`)
 - **Geth**: `ghcr.io/zktaiga/chaotic-ethereum/geth:v1.16.2` (based on `ethereum/client-go:v1.16.2`)
 - **Nethermind**: `ghcr.io/zktaiga/chaotic-ethereum/nethermind:1.31.0` (based on `nethermind/nethermind:1.31.0`)
-- **Reth**: `ghcr.io/zktaiga/chaotic-ethereum/reth:v1.2.18` (based on `ethpandaops/reth:v1.2.18`)
+- **Reth**: `ghcr.io/zktaiga/chaotic-ethereum/reth:main` (based on `ethpandaops/reth:main`)
 
 ### Consensus Clients
 - **Lighthouse**: `ghcr.io/zktaiga/chaotic-ethereum/lighthouse:v7.1.0` (based on `sigp/lighthouse:v7.1.0`)
