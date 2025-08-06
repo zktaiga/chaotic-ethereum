@@ -79,6 +79,14 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Extract upstream version from Dockerfile
+      id: upstream-version
+      run: |
+        CLIENT=${{ matrix.client }}
+        VERSION=$(grep "FROM.*:" ${CLIENT}/Dockerfile | grep -v "chaotic-base\|alpine\|scratch" | head -1 | sed 's/.*://' | sed 's/ .*//')
+        echo "version=${VERSION}" >> $GITHUB_OUTPUT
+        echo "Found upstream version: ${VERSION}"
+
     - name: Extract metadata
       id: meta
       uses: docker/metadata-action@v5
@@ -89,6 +97,7 @@ jobs:
           type=ref,event=pr
           type=schedule,pattern=weekly-{{date 'YYYYMMDD'}}
           type=raw,value=latest,enable={{is_default_branch}}
+          type=raw,value=${{ steps.upstream-version.outputs.version }},enable={{is_default_branch}}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3

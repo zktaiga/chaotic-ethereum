@@ -4,32 +4,37 @@ Docker images for Ethereum clients with [Toda](https://github.com/chaos-mesh/tod
 
 ## Available Images
 
-All images are available at `ghcr.io/zktaiga/chaotic-ethereum/[client]:latest`
+Images mirror upstream versions and are available at `ghcr.io/zktaiga/chaotic-ethereum/[client]:[version]`
 
 ### Execution Clients
-- **Besu**: `ghcr.io/zktaiga/chaotic-ethereum/besu:latest` (based on `hyperledger/besu:latest`)
-- **Erigon**: `ghcr.io/zktaiga/chaotic-ethereum/erigon:latest` (based on `erigontech/erigon:latest`)
-- **Geth**: `ghcr.io/zktaiga/chaotic-ethereum/geth:latest` (based on `ethereum/client-go:stable`)
-- **Nethermind**: `ghcr.io/zktaiga/chaotic-ethereum/nethermind:latest` (based on `nethermind/nethermind:latest`)
-- **Reth**: `ghcr.io/zktaiga/chaotic-ethereum/reth:latest` (based on `ethpandaops/reth:main`)
+- **Besu**: `ghcr.io/zktaiga/chaotic-ethereum/besu:25.7.0` (based on `hyperledger/besu:25.7.0`)
+- **Erigon**: `ghcr.io/zktaiga/chaotic-ethereum/erigon:v3.0.15` (based on `erigontech/erigon:v3.0.15`)
+- **Geth**: `ghcr.io/zktaiga/chaotic-ethereum/geth:v1.16.2` (based on `ethereum/client-go:v1.16.2`)
+- **Nethermind**: `ghcr.io/zktaiga/chaotic-ethereum/nethermind:1.31.0` (based on `nethermind/nethermind:1.31.0`)
+- **Reth**: `ghcr.io/zktaiga/chaotic-ethereum/reth:v1.2.18` (based on `ethpandaops/reth:v1.2.18`)
 
 ### Consensus Clients
-- **Lighthouse**: `ghcr.io/zktaiga/chaotic-ethereum/lighthouse:latest` (based on `sigp/lighthouse:latest`)
-- **Lodestar**: `ghcr.io/zktaiga/chaotic-ethereum/lodestar:latest` (based on `chainsafe/lodestar:latest`)
-- **Nimbus**: `ghcr.io/zktaiga/chaotic-ethereum/nimbus:latest` (based on `statusim/nimbus-eth2:multiarch-latest`)
-- **Prysm**: `ghcr.io/zktaiga/chaotic-ethereum/prysm:latest` (based on `gcr.io/prysmaticlabs/prysm/beacon-chain:latest`)
-- **Teku**: `ghcr.io/zktaiga/chaotic-ethereum/teku:latest` (based on `consensys/teku:latest`)
+- **Lighthouse**: `ghcr.io/zktaiga/chaotic-ethereum/lighthouse:v7.1.0` (based on `sigp/lighthouse:v7.1.0`)
+- **Lodestar**: `ghcr.io/zktaiga/chaotic-ethereum/lodestar:v1.33.0` (based on `chainsafe/lodestar:v1.33.0`)
+- **Nimbus**: `ghcr.io/zktaiga/chaotic-ethereum/nimbus:multiarch-v25.1.0` (based on `statusim/nimbus-eth2:multiarch-v25.1.0`)
+- **Prysm**: `ghcr.io/zktaiga/chaotic-ethereum/prysm:v5.2.0` (based on `gcr.io/prysmaticlabs/prysm/beacon-chain:v5.2.0`)
+- **Teku**: `ghcr.io/zktaiga/chaotic-ethereum/teku:25.6.0` (based on `consensys/teku:25.6.0`)
+
+**Latest tags**: Each client also has a `:latest` tag pointing to the current pinned version.
 
 ## Usage
 
 Each image functions identically to the original upstream image, with Toda available at `/usr/local/bin/toda`.
 
 ```bash
-# Run normally (no chaos)
+# Run normally (no chaos) - using specific version
+docker run ghcr.io/zktaiga/chaotic-ethereum/geth:v1.16.2 --help
+
+# Or use latest tag
 docker run ghcr.io/zktaiga/chaotic-ethereum/geth:latest --help
 
 # With chaos injection (example - requires proper namespace setup)
-docker run --pid=host --privileged ghcr.io/zktaiga/chaotic-ethereum/geth:latest
+docker run --pid=host --privileged ghcr.io/zktaiga/chaotic-ethereum/geth:v1.16.2
 ```
 
 ## Building Locally
@@ -58,11 +63,9 @@ docker build -t chaotic-geth ./geth
 docker run --rm chaotic-geth toda --help
 ```
 
-## Automation
+## Versioning
 
-- **Dependabot**: Automatically monitors upstream image updates
-- **GitHub Actions**: Rebuilds base + client images with proper dependency chain
-- **Shared Base**: Toda binary cached once, reused across all clients
+Images mirror upstream versions exactly. Dependabot creates PRs for updates automatically.
 
 ## About Toda
 
