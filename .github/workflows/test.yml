@@ -1,0 +1,28 @@
+name: Test All Clients
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-clients:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build base image
+      run: docker build -f Dockerfile.base -t chaotic-base:latest .
+
+    - name: Run test suite
+      run: ./scripts/test-all.sh
+
+    - name: Show final status
+      if: success()
+      run: echo "✅ All Ethereum clients built successfully with Toda integration"
