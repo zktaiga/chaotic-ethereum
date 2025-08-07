@@ -3,6 +3,19 @@ name: Build and Push Docker Images
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'Dockerfile.base'
+      - 'besu/**'
+      - 'erigon/**'
+      - 'geth/**'
+      - 'lighthouse/**'
+      - 'lodestar/**'
+      - 'nethermind/**'
+      - 'nimbus/**'
+      - 'prysm/**'
+      - 'reth/**'
+      - 'teku/**'
+      - '.github/workflows/build.yml'
   schedule:
     - cron: '0 2 * * 1' # Weekly on Monday at 2 AM UTC
 

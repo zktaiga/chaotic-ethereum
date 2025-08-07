@@ -3,6 +3,20 @@ name: Test Builds
 on:
   pull_request:
     branches: [ main ]
+    paths:
+      - 'Dockerfile.base'
+      - 'besu/**'
+      - 'erigon/**'
+      - 'geth/**'
+      - 'lighthouse/**'
+      - 'lodestar/**'
+      - 'nethermind/**'
+      - 'nimbus/**'
+      - 'prysm/**'
+      - 'reth/**'
+      - 'teku/**'
+      - '.github/workflows/build.yml'
+      - '.github/workflows/test-build.yml'
 
 jobs:
   test-build-base:
