@@ -24,21 +24,9 @@ jobs:
     - name: Delete old package versions
       uses: actions/delete-package-versions@v4
       with:
-        package-name: '${{ env.IMAGE_PREFIX }}/${{ matrix.client }}'
+        package-name: 'chaotic-ethereum/${{ matrix.client }}'
         package-type: 'container'
         min-versions-to-keep: 3
         delete-only-untagged-versions: false
         token: ${{ secrets.GITHUB_TOKEN }}
-      continue-on-error: true # Don't fail if package doesn't exist
-
-    - name: Delete PR and branch tagged versions
-      uses: actions/delete-package-versions@v4
-      with:
-        package-name: '${{ env.IMAGE_PREFIX }}/${{ matrix.client }}'
-        package-type: 'container'
-        min-versions-to-keep: 0
-        delete-only-untagged-versions: false
-        token: ${{ secrets.GITHUB_TOKEN }}
-        # Delete versions matching PR and branch patterns
-        version-pattern: '^(pr-|main$)'
-      continue-on-error: true
+      continue-on-error: true # Skip if package doesn't exist
