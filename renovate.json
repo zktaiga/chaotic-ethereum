@@ -1,22 +1,37 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "schedule": ["before 6am on monday"],
+  "extends": [
+    "config:recommended"
+  ],
+  "schedule": [
+    "before 6am on monday"
+  ],
   "timezone": "UTC",
-  "labels": ["dependencies"],
-  "assignees": ["@zktaiga"],
-  "reviewers": ["@zktaiga"],
+  "labels": [
+    "dependencies"
+  ],
+  "assignees": [
+    "@zktaiga"
+  ],
+  "reviewers": [
+    "@zktaiga"
+  ],
   "prConcurrentLimit": 5,
   "prHourlyLimit": 2,
-  "docker": {
-    "enabled": true
-  },
   "packageRules": [
     {
-      "matchDatasources": ["docker"],
+      "matchCategories": [
+        "docker"
+      ],
+      "enabled": true
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
       "matchPackageNames": [
         "hyperledger/besu",
-        "erigontech/erigon", 
+        "erigontech/erigon",
         "ethereum/client-go",
         "sigp/lighthouse",
         "chainsafe/lodestar",
@@ -28,7 +43,9 @@
       ],
       "groupName": "Ethereum clients",
       "automerge": false,
-      "schedule": ["before 6am on monday"]
+      "schedule": [
+        "before 6am on monday"
+      ]
     }
   ]
 }
