@@ -1,0 +1,51 @@
+name: Test Builds
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-build-base:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build base image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile.base
+        push: false
+        tags: chaotic-base:test
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+  test-build-clients:
+    needs: test-build-base
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        client: [besu, erigon, geth, lighthouse, lodestar, nethermind, nimbus, prysm, reth, teku]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build client image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./${{ matrix.client }}
+        build-args: |
+          CHAOTIC_BASE=chaotic-base:test
+        push: false
+        tags: test-${{ matrix.client }}:latest
+        cache-from: type=gha
+        cache-to: type=gha,mode=max

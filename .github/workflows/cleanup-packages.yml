@@ -1,0 +1,44 @@
+name: Cleanup Old Packages
+
+on:
+  schedule:
+    - cron: '0 3 * * 0' # Weekly on Sunday at 3 AM UTC
+  workflow_dispatch: # Allow manual triggering
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ${{ github.repository }}
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    
+    strategy:
+      matrix:
+        client: [chaotic-base, besu, erigon, geth, lighthouse, lodestar, nethermind, nimbus, prysm, reth, teku]
+    
+    steps:
+    - name: Delete old package versions
+      uses: actions/delete-package-versions@v4
+      with:
+        package-name: '${{ env.IMAGE_PREFIX }}/${{ matrix.client }}'
+        package-type: 'container'
+        min-versions-to-keep: 3
+        delete-only-untagged-versions: false
+        token: ${{ secrets.GITHUB_TOKEN }}
+      continue-on-error: true # Don't fail if package doesn't exist
+
+    - name: Delete PR and branch tagged versions
+      uses: actions/delete-package-versions@v4
+      with:
+        package-name: '${{ env.IMAGE_PREFIX }}/${{ matrix.client }}'
+        package-type: 'container'
+        min-versions-to-keep: 0
+        delete-only-untagged-versions: false
+        token: ${{ secrets.GITHUB_TOKEN }}
+        # Delete versions matching PR and branch patterns
+        version-pattern: '^(pr-|main$)'
+      continue-on-error: true
