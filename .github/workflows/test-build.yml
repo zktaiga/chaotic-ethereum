@@ -38,6 +38,14 @@ jobs:
         tags: chaotic-base:test
         cache-from: type=gha
         cache-to: type=gha,mode=max
+    - name: Save base image
+      run: |
+        docker save chaotic-base:test -o chaotic-base.tar
+    - name: Upload base image artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: chaotic-base-image
+        path: chaotic-base.tar
 
   test-build-clients:
     needs: test-build-base
@@ -50,8 +58,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Download base image artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: chaotic-base-image
+        path: chaotic-base.tar
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
+
+    - name: Load base image
+      run: docker load -i chaotic-base.tar
 
     - name: Build client image
       uses: docker/build-push-action@v5
