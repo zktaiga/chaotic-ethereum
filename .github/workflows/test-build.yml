@@ -63,10 +63,12 @@ jobs:
       uses: actions/download-artifact@v6
       with:
         name: chaotic-base-image
-        path: chaotic-base.tar
+        path: .
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
+      with:
+        driver: docker
 
     - name: Load base image
       run: docker load -i chaotic-base.tar
