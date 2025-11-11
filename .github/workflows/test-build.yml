@@ -81,5 +81,3 @@ jobs:
           CHAOTIC_BASE=chaotic-base:test
         push: false
         tags: test-${{ matrix.client }}:latest
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
