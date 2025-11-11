@@ -35,6 +35,7 @@ jobs:
         context: .
         file: ./Dockerfile.base
         push: false
+        load: true
         tags: chaotic-base:test
         cache-from: type=gha
         cache-to: type=gha,mode=max
