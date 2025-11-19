@@ -22,7 +22,7 @@ jobs:
     
     steps:
     - name: Delete old package versions
-      uses: actions/delete-package-versions@v4
+      uses: actions/delete-package-versions@v5
       with:
         package-name: 'chaotic-ethereum/${{ matrix.client }}'
         package-type: 'container'
